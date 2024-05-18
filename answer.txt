@@ -1,7 +1,27 @@
-- Question: Is JAVA a Pass by Value or a Pass by Reference programming language?
-Answer: JAVA is a pass by value language, meaning that a copy of the value of the parameter is passed to the method.
-Because even though a variable might hold a reference to an object, that object reference is a value that represents the object's location in memory.
-Object references are therefore passed by value.
+Question: Suppose we are taking this Comparable interface approach
+	  What class should implement the Comparable interface?
+Answer:	  The Media class
 
-For primitive types, the value itself is passed.
-For objects, a copy of the reference to the object is passed, allowing modifications to the object's state but not to the original reference itself.
+Question: In those classes, how should you implement the compareTo() method be to reflect 
+	  the ordering that we want?
+Answer: 
+	@Override
+	public int compareTo(Media other) {
+		return Comparator.comparing(Media::getTitle)
+			.thenComparingDouble(Media::getCost()
+			.compare(this, other);
+	}
+
+Question: Can we have two ordering rules of the item (by title then cost and by cost then title)
+	  if we use this Comparable interface approach?
+Answer:   No we can't because we can't declare two methods with the same name and signature
+
+Question: Suppose the DVDs have a different ordering rule from other media types, that is by title, then decreasing length, then cost. How would you modify your code to allow this?
+Answer:
+	@Override
+	public int compareTo(DigitalVideoDisc other) {
+		return Comparator.comparing(DigitalVideoDisc::getTitle)
+			.thenComparingInt(DigitalVideoDisc::getLength)
+			.thenComparingDouble(DigitalVideoDisc::getCost)
+			.comparing(this, other);
+	}
