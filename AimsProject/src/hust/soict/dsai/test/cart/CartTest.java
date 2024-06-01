@@ -1,6 +1,7 @@
 package hust.soict.dsai.test.cart;
 import hust.soict.dsai.aims.cart.*;
-import hust.soict.dsai.aims.media.DigitalVideoDisc;
+import hust.soict.dsai.aims.media.*;
+import hust.soict.dsai.aims.screen.*;
 
 public class CartTest {
 
@@ -22,10 +23,14 @@ public class CartTest {
 				"Animation", "Roger Allerts", 90, 18.99f);
 		cart.addMedia(dvd3);
 		
-//		//Test the print method
-//		cart.print();
-//		//Test the search methods
-//		cart.search("The Lion King1");
-		
+		Book b1 = new Book("Aladin Book",
+				"Animation", 18.99f);
+		cart.addMedia(b1);
+		cart.sortByCostTitle();
+		//Test the print method
+		cart.print();
+		cart.sortByCostTitle();
+		cart.print();
+		//Test the search methods
 	}
 }

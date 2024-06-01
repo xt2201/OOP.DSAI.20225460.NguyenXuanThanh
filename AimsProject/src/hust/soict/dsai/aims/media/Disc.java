@@ -1,36 +1,27 @@
 package hust.soict.dsai.aims.media;
 
-public class Disc extends Media {
-    private int length;
-    private String director;
+public abstract class Disc extends Media implements Playable{
+	// Disc is abstract class since we don't need to create any Disc instances
+	
+	private String director;
+	private int length;
+	
+	public Disc() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Disc(String title, String category, float cost, String director, int length) {
+		super(title, category, cost);
+		this.director = director;
+		this.length = length;
+	}
 
-    public Disc() {
-        super();
-    }
+	public String getDirector() {
+		return director;
+	}
 
-    public Disc(int id, String title, String category, float cost, int length, String director) {
-        super();
-        this.setId(id);
-        this.setTitle(title);
-        this.setCategory(category);
-        this.setCost(cost);
-        this.length = length;
-        this.director = director;
-    }
+	public int getLength() {
+		return length;
+	}
 
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
 }

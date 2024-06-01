@@ -1,80 +1,85 @@
 package hust.soict.dsai.aims.cart;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import hust.soict.dsai.aims.media.Media;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+import java.util.Collections;
 
-public class Cart {
-    private List<Media> itemsOrdered = new ArrayList<>();
+public class Cart {	
+	public static final int MAX_NUMBER_ORDERED = 20;
+	private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
+	
+	public Cart(){
+		// do nothing since it's attributes are already initialized
+	}
 
-    public void addMedia(Media media) {
-        if (!itemsOrdered.contains(media)) {
-            itemsOrdered.add(media);
-            System.out.println("The media has been added.");
-        } else {
-            System.out.println("The media is already in the cart.");
-        }
-    }
+	public boolean addMedia(Media m) {
+		if (itemsOrdered.contains(m))
+			return false;
+		itemsOrdered.add(m);
+		return true;
+	}
+	
+	public boolean removeMedia(Media m) {
+		if (itemsOrdered.contains(m)) {
+			itemsOrdered.remove(m);
+			return true;
+		}
+		return false;
+	}
+	
+	public float totalCost() {
+		float s = 0.0f;
+		for (Media m: itemsOrdered)
+			s += m.getCost();
+		return s;
+	}
+	
+	public void sortByTitleCost() {
+		Collections.sort(itemsOrdered, Media.COMPARE_BY_TITLE_COST);
+	}
+	
+	public void sortByCostTitle() {
+		Collections.sort(itemsOrdered, Media.COMPARE_BY_COST_TITLE);
+	}
+	
 
-    public void removeMedia(Media media) {
-        if (itemsOrdered.contains(media)) {
-            itemsOrdered.remove(media);
-            System.out.println("The media has been removed.");
-        } else {
-            System.out.println("The media is not found in the cart.");
-        }
-    }
-
-    public float totalCost() {
-        float total = 0;
-        for (Media media : itemsOrdered) {
-            total += media.getCost();
-        }
-        return total;
-    }
-
-    public void sortByTitleCost() {
-        Collections.sort(itemsOrdered, Media.COMPARE_BY_TITLE_COST);
-    }
-
-    public void sortByCostTitle() {
-        Collections.sort(itemsOrdered, Media.COMPARE_BY_COST_TITLE);
-    }
-
-    public void printCart() {
-        System.out.println("Cart:");
-        for (Media media : itemsOrdered) {
-            System.out.println(media.toString());
-        }
-    }
-
-    public Media searchByTitle(String title) {
-        for (Media media : itemsOrdered) {
-            if (media.getTitle().equalsIgnoreCase(title)) {
-                return media;
-            }
-        }
-        return null;
-    }
-
-    public void filterById(int id) {
-        for (Media media : itemsOrdered) {
-            if (media.getId() == id) {
-                System.out.println(media.toString());
-            }
-        }
-    }
-
-    public void filterByTitle(String title) {
-        for (Media media : itemsOrdered) {
-            if (media.getTitle().equalsIgnoreCase(title)) {
-                System.out.println(media.toString());
-            }
-        }
-    }
-
-    public void clear() {
-        itemsOrdered.clear();
-    }
+	public void print() {
+		System.out.println("***********************CART***********************");
+		System.out.println("Ordered Items:");
+		int count = 0;
+		for (Media m: itemsOrdered) {
+			count+=1;
+			System.out.print(count+". ");
+			System.out.println(m);
+		}
+		System.out.println("Total cost: "+totalCost());
+		System.out.println("***************************************************");
+	}
+	
+	
+/*
+	public ArrayList<Media> search(int id) {
+		ArrayList<Media> res = new ArrayList<Media>();
+		for (Media d: itemsOrdered) {
+			if (d.isMatch(id))
+				res.add(d);
+		}
+		return res;
+	}
+	
+	public ArrayList<Media> search(String title) {
+		ArrayList<Media> res = new ArrayList<Media>();
+		for (Media d: itemsOrdered) {
+			if (d.isMatch(title))
+				res.add(d);
+		}
+		return res;
+	} 
+*/
+	
+	public ObservableList<Media> getItemsOrdered() {
+		return this.itemsOrdered;
+	}
+	
 }

@@ -1,15 +1,18 @@
 package hust.soict.dsai.aims.media;
-
 import java.util.Comparator;
 
 public class MediaComparatorByCostTitle implements Comparator<Media> {
-    @Override
-    public int compare(Media m1, Media m2) {
-        int costComparison = Float.compare(m2.getCost(), m1.getCost()); // Higher cost first
-        if (costComparison != 0) {
-            return costComparison;
-        } else {
-            return m1.getTitle().compareTo(m2.getTitle());
-        }
+	public MediaComparatorByCostTitle() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int compare(Media m1, Media m2) {
+        // Comparing media
+        int TitleCompare = m1.getTitle().compareTo(m2.getTitle());
+        int CostCompare = Float.compare(m1.getCost(), m2.getCost());
+ 
+        // 2nd level comparison
+        return (CostCompare == 0) ? TitleCompare
+                                  : -CostCompare;
     }
 }

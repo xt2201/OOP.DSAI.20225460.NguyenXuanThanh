@@ -1,34 +1,42 @@
 package hust.soict.dsai.test.store;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-import hust.soict.dsai.aims.media.Book;
-import hust.soict.dsai.aims.media.CompactDisc;
-import hust.soict.dsai.aims.media.DigitalVideoDisc;
-import hust.soict.dsai.aims.media.Media;
-import hust.soict.dsai.aims.media.Track;
+import hust.soict.dsai.aims.exception.PlayerException;
+import hust.soict.dsai.aims.media.*;
+import hust.soict.dsai.aims.store.*;
 
 public class StoreTest {
-    public static void main(String[] args) {
-        List<Media> mediae = new ArrayList<>();
 
-        // Create some media
-        DigitalVideoDisc dvd = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
-        CompactDisc cd = new CompactDisc(1, "Greatest Hits", "Music", 15.95f, 60, "Various Artists", "Queen");
-        Book book = new Book(2, "Effective Java", "Programming", 45.00f, new ArrayList<>());
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//create a Store instance and 3 DVDs
+		Store store = new Store();	
+		DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Lion King",
+				"Animation", "Roger Allers", 87, 19.95f);
+		DigitalVideoDisc dvd2 = new DigitalVideoDisc("Star Wars",
+				"Science Fiction", "George Lucas", -87, 24.95f);
+		DigitalVideoDisc dvd3 = new DigitalVideoDisc("Aladin",
+				"Animation", "Roger Allerts", 90,  18.99f);
+		Book b1 = new Book("Aladin", "Tales", 20f);
+		//here I add DVDs and test add method
+ 		store.addMedia(dvd1);
+		store.addMedia(dvd2);
+		store.addMedia(dvd3);
+		store.addMedia(b1);
+		
+		store.printStore();
+		try {
+			dvd2.play();
+		} catch (PlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(new JFrame(), "ERROR: DVD length is non-positive!", "Illegal DVD length",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		System.out.println("done");
+	}
 
-        cd.addTrack(new Track("Bohemian Rhapsody", 6));
-        cd.addTrack(new Track("Another One Bites the Dust", 3));
-
-        // Add media to the list
-        mediae.add(dvd);
-        mediae.add(cd);
-        mediae.add(book);
-
-        // Iterate through the list and print out the information
-        for (Media m : mediae) {
-            System.out.println(m.toString());
-        }
-    }
 }

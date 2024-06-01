@@ -5,39 +5,46 @@ import java.util.List;
 import hust.soict.dsai.aims.media.Media;
 
 public class Store {
-    private List<Media> itemsInStore = new ArrayList<>();
-
-    public void addMedia(Media media) {
-        if (!itemsInStore.contains(media)) {
-            itemsInStore.add(media);
-            System.out.println("The media has been added to the store.");
-        } else {
-            System.out.println("The media is already in the store.");
-        }
-    }
-
-    public void removeMedia(Media media) {
-        if (itemsInStore.contains(media)) {
-            itemsInStore.remove(media);
-            System.out.println("The media has been removed from the store.");
-        } else {
-            System.out.println("The media is not found in the store.");
-        }
-    }
-
-    public void printStore() {
-        System.out.println("Store:");
-        for (Media media : itemsInStore) {
-            System.out.println(media.toString());
-        }
-    }
-
-    public Media searchByTitle(String title) {
-        for (Media media : itemsInStore) {
-            if (media.getTitle().equalsIgnoreCase(title)) {
-                return media;
-            }
-        }
-        return null;
-    }
+	private List<Media> itemsInStore = new ArrayList<Media>();
+	
+	public boolean addMedia(Media m) {
+		if (itemsInStore.contains(m))
+			return false;
+		itemsInStore.add(m);
+		return true;
+	}
+	
+	public boolean removeMedia(Media m) {
+		if (itemsInStore.contains(m)) {
+			itemsInStore.remove(m);
+			return true;
+		}
+		return false;
+	}
+	
+	public void printStore() {
+		//this method is not in the instruction
+		//only used for testing
+		System.out.println("List of items in Store: ");
+		int count = 0;
+		for (Media d: itemsInStore) {
+			count+=1;
+			System.out.print(count+". ");
+			System.out.println(d);
+		}
+	}
+	
+	public ArrayList<Media> search(String title) {
+		ArrayList<Media> m = new ArrayList<Media>();
+		for (Media d: itemsInStore) {
+			if ((d.isMatch(title))&&(!(m.contains(d))))
+				m.add(d);
+		}
+		return m;
+	}
+	
+	public ArrayList<Media> getItemsInStore(){
+		return (ArrayList<Media>) itemsInStore;
+	}
+	 
 }
